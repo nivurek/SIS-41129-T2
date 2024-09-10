@@ -13,14 +13,14 @@ const router = express.Router();
 
 // This section will help you get a list of all the records.
 router.get("/", async (req, res) => {
-  let collection = await db.collection("records");
+  let collection = await db.collection("users");
   let results = await collection.find({}).toArray();
   res.send(results).status(200);
 });
 
 // This section will help you get a single record by id
 router.get("/:id", async (req, res) => {
-  let collection = await db.collection("records");
+  let collection = await db.collection("users");
   let query = { _id: new ObjectId(req.params.id) };
   let result = await collection.findOne(query);
 
@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
       position: req.body.position,
       level: req.body.level,
     };
-    let collection = await db.collection("records");
+    let collection = await db.collection("users");
     let result = await collection.insertOne(newDocument);
     res.send(result).status(204);
   } catch (err) {
@@ -57,7 +57,7 @@ router.patch("/:id", async (req, res) => {
       },
     };
 
-    let collection = await db.collection("records");
+    let collection = await db.collection("users");
     let result = await collection.updateOne(query, updates);
     res.send(result).status(200);
   } catch (err) {
