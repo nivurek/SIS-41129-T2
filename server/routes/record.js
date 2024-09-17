@@ -1,15 +1,13 @@
 import express from "express";
-
 // This will help us connect to the database
 import db from "../db/connection.js";
-
 // This help convert the id from string to ObjectId for the _id.
 import { ObjectId } from "mongodb";
-
 // router is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const router = express.Router();
+const usersCollection = db.collection('users');
 
 // This section will help you get a list of all the records.
 router.get("/", async (req, res) => {
@@ -80,5 +78,31 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send("Error deleting record");
   }
 });
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    // Find the user by email in MongoDB Atlas
+    const user = await usersCollection.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+
+      res.json({ token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+}
+);
+
+
 
 export default router;
