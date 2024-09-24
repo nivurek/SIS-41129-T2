@@ -1,6 +1,10 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import bcrypt from 'bcrypt';  // For password hashing
 import jwt from 'jsonwebtoken';  // For generating JWT
+
+
+
+
 const uri = "mongodb+srv://La****:*******@chromaux.tbtnm.mongodb.net/users?retryWrites=true&w=majority"
 const client = new MongoClient(uri, {
   serverApi: {
