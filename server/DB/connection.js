@@ -1,11 +1,26 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
-import bcrypt from 'bcrypt';  // For password hashing
-import jwt from 'jsonwebtoken';  // For generating JWT
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
+dotenv.config({ path: 'config.env' });
 
+const uri = process.env.Atlas_URI;
 
+const connectDB = async () => {
+  try {
+    await mongoose.connect(uri, {
+     
+    });
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
 
-const uri = "mongodb+srv://La****:*******@chromaux.tbtnm.mongodb.net/users?retryWrites=true&w=majority"
+export default connectDB;
+
+/*
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -31,3 +46,4 @@ try {
 connectDB();
 let db = client.db("chromaDB");
 export default db;
+*/
