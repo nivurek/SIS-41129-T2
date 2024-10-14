@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import { Container } from 'semantic-ui-react';
 
 import LoginPage from './pages/Login/LoginPage';
+import AIPage from './pages/AI/AIPage';
 
 import backgroundBanner from './assets/background_banner.png'; 
 import PrimaryScreenshotPage from './pages/PrimaryScreenshot/PrimaryScreenshotPage';
@@ -24,6 +25,7 @@ const AppContent = ({ loggedInUser, userObjects, handleLogout, handleLogin }) =>
   const location = useLocation();
   const isLoginPage = ['/login'].includes(location.pathname);
   console.log("isloginpage?", isLoginPage);
+
 
   const isAuth = loggedInUser !== null;
   const activeUser = (loggedInUser && loggedInUser.Name) ?? "";
@@ -49,6 +51,7 @@ const AppContent = ({ loggedInUser, userObjects, handleLogout, handleLogin }) =>
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/ai" element={<AIPage/>} />
               </Routes>
             </div>
           </>
